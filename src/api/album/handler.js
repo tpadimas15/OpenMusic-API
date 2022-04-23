@@ -85,3 +85,5 @@ class AlbumsHandler {
     }
   }
 }
+
+module.exports = AlbumsHandler;

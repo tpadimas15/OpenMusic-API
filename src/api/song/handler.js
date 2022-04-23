@@ -7,6 +7,8 @@ class SongsHandler {
     try {
       const { title, year, genre, performer, duration, albumId } = request.payload;
 
+      this._service.addSong({ title, year, genre, performer, duration, albumId });
+
       const songId = this._service.addNote({ title, year, genre, performer, duration, albumId });
 
       const response = h.response({
