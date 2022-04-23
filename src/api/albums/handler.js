@@ -1,13 +1,16 @@
 class AlbumsHandler {
   constructor(service) {
     this._service = service;
+
+    this.postAlbumHandler = this.postAlbumHandler.bind(this);
+    this.getAlbumByIdHandler = this.getAlbumByIdHandler.bind(this);
+    this.putAlbumByIdHandler = this.putAlbumByIdHandler.bind(this);
+    this.deleteAlbumByIdHandler = this.deleteAlbumByIdHandler.bind(this);
   }
 
   postAlbumHandler(request, h) {
     try {
       const { name, year } = request.payload;
-
-      this._service.addAlbum({ name, year });
 
       const albumId = this._service.addAlbum({ name, year });
 

@@ -1,5 +1,4 @@
 const Hapi = require("@hapi/hapi");
-const routes = require("./routes");
 const albums = require("./api/albums");
 const songs = require("./api/songs");
 const AlbumsService = require("./services/inMemory/AlbumsService");
@@ -18,8 +17,6 @@ const init = async () => {
       },
     },
   });
-
-  server.route(routes);
 
   await server.register([
     {
