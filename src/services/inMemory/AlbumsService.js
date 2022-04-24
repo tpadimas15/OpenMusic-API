@@ -25,11 +25,7 @@ class AlbumsService {
     return id;
   }
 
-  getAlbums() {
-    return this._albums;
-  }
-
-  getAlbumsById(id) {
+  getAlbumById(id) {
     const album = this._albums.filter((alb) => alb.id === id)[0];
     if (!album) {
       throw new Error("Album not found");

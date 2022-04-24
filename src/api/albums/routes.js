@@ -5,7 +5,7 @@ const routes = (handler) => [
     handler: handler.postAlbumHandler,
   },
   {
-    metdhod: "GET",
+    method: "GET",
     path: "/albums/{id}",
     handler: handler.getAlbumByIdHandler,
   },

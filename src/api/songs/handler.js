@@ -1,6 +1,12 @@
 class SongsHandler {
   constructor(service) {
     this._service = service;
+
+    this.postSongHandler = this.postSongHandler.bind(this);
+    this.getSongsHandler = this.getSongsHandler.bind(this);
+    this.getSongByIdHandler = this.getSongByIdHandler.bind(this);
+    this.putSongByIdHandler = this.putSongByIdHandler.bind(this);
+    this.deleteSongByIdHandler = this.deleteSongByIdHandler.bind(this);
   }
 
   postSongHandler(request, h) {
@@ -21,7 +27,7 @@ class SongsHandler {
     } catch (error) {
       const response = h.response({
         status: "fail",
-        message: errror.message,
+        message: error.message,
       });
       response.code(400);
       return response;
@@ -55,7 +61,7 @@ class SongsHandler {
       return response;
     }
   }
-  putSongByIdHandler() {
+  putSongByIdHandler(request, h) {
     try {
       const { id } = request.params;
 
@@ -74,7 +80,7 @@ class SongsHandler {
       return response;
     }
   }
-  deleteSongByIdHandler() {
+  deleteSongByIdHandler(request, h) {
     try {
       const { id } = request.params;
       this._service.deleteSongById(id);

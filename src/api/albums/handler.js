@@ -32,7 +32,7 @@ class AlbumsHandler {
       return response;
     }
   }
-  getAlbumByIdHandler() {
+  getAlbumByIdHandler(request, h) {
     try {
       const { id } = request.params;
       const album = this._service.getAlbumById(id);
@@ -51,7 +51,7 @@ class AlbumsHandler {
       return response;
     }
   }
-  putAlbumByIdHandler() {
+  putAlbumByIdHandler(request, h) {
     try {
       const { id } = request.params;
 
@@ -70,7 +70,7 @@ class AlbumsHandler {
       return response;
     }
   }
-  deleteAlbumByIdHandler() {
+  deleteAlbumByIdHandler(request, h) {
     try {
       const { id } = request.params;
       this._service.deleteAlbumById(id);
