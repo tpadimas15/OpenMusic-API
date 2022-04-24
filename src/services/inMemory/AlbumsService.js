@@ -1,4 +1,6 @@
 const { nanoid } = require("nanoid");
+const InvariantError = require("../../exceptions/InvariantError");
+const NotFoundError = require("../../exceptions/NotFoundError");
 
 class AlbumsService {
   constructor() {
@@ -19,7 +21,7 @@ class AlbumsService {
     const isSuccess = this._albums.filter((album) => album.id === id).length > 0;
 
     if (!isSuccess) {
-      throw new Error("Album failed to add");
+      throw new InvariantError("Album failed to add");
     }
 
     return id;
@@ -28,7 +30,7 @@ class AlbumsService {
   getAlbumById(id) {
     const album = this._albums.filter((alb) => alb.id === id)[0];
     if (!album) {
-      throw new Error("Album not found");
+      throw new NotFoundError("Album not found");
     }
     return album;
   }
@@ -37,7 +39,7 @@ class AlbumsService {
     const index = this._albums.findIndex((alb) => alb.id === id);
 
     if (index === -1) {
-      throw new Error("Failed to Update Album. Id not found");
+      throw new NotFoundError("Failed to Update Album. Id not found");
     }
 
     this._albums[index] = {
@@ -51,7 +53,7 @@ class AlbumsService {
     const index = this._albums.findIndex((alb) => alb.id === id);
 
     if (index === -1) {
-      throw new Error("Failed to Delete Album. Id not found");
+      throw new NotFoundError("Failed to Delete Album. Id not found");
     }
 
     this._albums.splice(index, 1);

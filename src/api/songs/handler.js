@@ -12,6 +12,7 @@ class SongsHandler {
 
   postSongHandler(request, h) {
     try {
+      this._validator.validateSongPayload(request.payload);
       const { title, year, genre, performer, duration, albumId } = request.payload;
 
       const songId = this._service.addNote({ title, year, genre, performer, duration, albumId });
@@ -26,11 +27,22 @@ class SongsHandler {
       response.code(201);
       return response;
     } catch (error) {
+      if (error instanceof ClientError) {
+        const response = h.response({
+          status: "fail",
+          message: error.message,
+        });
+        response.code(error.statusCode);
+        return response;
+      }
+
+      //Server Error!
       const response = h.response({
-        status: "fail",
-        message: error.message,
+        status: "error",
+        message: "Sorry, server failed!",
       });
-      response.code(400);
+      response.code(500);
+      console.error(error);
       return response;
     }
   }
@@ -54,16 +66,28 @@ class SongsHandler {
         },
       };
     } catch (error) {
+      if (error instanceof ClientError) {
+        const response = h.response({
+          status: "fail",
+          message: error.message,
+        });
+        response.code(error.statusCode);
+        return response;
+      }
+
+      //Server Error!
       const response = h.response({
-        status: "fail",
-        message: error.message,
+        status: "error",
+        message: "Sorry, server failed!",
       });
-      response.code(404);
+      response.code(500);
+      console.error(error);
       return response;
     }
   }
   putSongByIdHandler(request, h) {
     try {
+      this._validator.validateSongPayload(request.payload);
       const { id } = request.params;
 
       this._service.editSongById(id, request.payload);
@@ -73,11 +97,22 @@ class SongsHandler {
         message: "Successfully updated song",
       };
     } catch (error) {
+      if (error instanceof ClientError) {
+        const response = h.response({
+          status: "fail",
+          message: error.message,
+        });
+        response.code(error.statusCode);
+        return response;
+      }
+
+      //Server Error!
       const response = h.response({
-        status: "fail",
-        message: error.message,
+        status: "error",
+        message: "Sorry, server failed!",
       });
-      response.code(404);
+      response.code(500);
+      console.error(error);
       return response;
     }
   }
@@ -90,11 +125,22 @@ class SongsHandler {
         message: "Successfully delete song",
       };
     } catch (error) {
+      if (error instanceof ClientError) {
+        const response = h.response({
+          status: "fail",
+          message: error.message,
+        });
+        response.code(error.statusCode);
+        return response;
+      }
+
+      //Server Error!
       const response = h.response({
-        status: "fail",
-        message: "Failed to delete. Id not found",
+        status: "error",
+        message: "Sorry, server failed!",
       });
-      response.code(404);
+      response.code(500);
+      console.error(error);
       return response;
     }
   }

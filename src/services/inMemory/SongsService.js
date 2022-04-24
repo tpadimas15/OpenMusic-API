@@ -1,4 +1,6 @@
 const nanoid = require("nanoid");
+const InvariantError = require("../../exceptions/InvariantError");
+const NotFoundError = require("../../exceptions/NotFoundError");
 
 class SongsService {
   constructor() {
@@ -22,7 +24,7 @@ class SongsService {
     const isSuccess = this._songs.filter((song) => song.id === id).length > 0;
 
     if (!isSuccess) {
-      throw new Error("Failed to add song");
+      throw new InvariantError("Failed to add song");
     }
 
     return id;
@@ -35,7 +37,7 @@ class SongsService {
   getSongById(id) {
     const song = this._songs.filter((s) => s.id === id)[0];
     if (!song) {
-      throw new Error("Song not found");
+      throw new NotFoundError("Song not found");
     }
     return song;
   }
@@ -44,7 +46,7 @@ class SongsService {
     const index = this._songs.findIndex((song) => song.id === id);
 
     if (index === -1) {
-      throw new Error("Failed to Update Song. Id not found");
+      throw new NotFoundError("Failed to Update Song. Id not found");
     }
 
     this._songs[index] = {
@@ -62,7 +64,7 @@ class SongsService {
     const index = this._songs.findIndex((song) => song.id === id);
 
     if (index === -1) {
-      throw new Error("Failed to Delete Song. Id not found");
+      throw new NotFoundError("Failed to Delete Song. Id not found");
     }
 
     this._songs.splice(index, 1);
