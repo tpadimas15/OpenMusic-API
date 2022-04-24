@@ -1,6 +1,7 @@
 class SongsHandler {
-  constructor(service) {
+  constructor(service, validator) {
     this._service = service;
+    this._validator = validator;
 
     this.postSongHandler = this.postSongHandler.bind(this);
     this.getSongsHandler = this.getSongsHandler.bind(this);
