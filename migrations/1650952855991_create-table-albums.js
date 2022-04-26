@@ -1,12 +1,12 @@
 /* eslint-disable camelcase */
 
 exports.up = (pgm) => {
-  pgm.createTable("songs", {
+  pgm.createTable("albums", {
     id: {
       type: "VARCHAR(50)",
       primaryKey: true,
     },
-    title: {
+    name: {
       type: "TEXT",
       notNull: true,
     },
@@ -14,19 +14,7 @@ exports.up = (pgm) => {
       type: "INTEGER",
       notNull: true,
     },
-    performer: {
-      type: "TEXT",
-      notNull: true,
-    },
-    genre: {
-      type: "TEXT",
-      notNull: false,
-    },
-    duration: {
-      type: "INTEGER",
-      notNull: false,
-    },
-    inserted_at: {
+    created_at: {
       type: "TEXT",
       notNull: true,
     },
@@ -38,5 +26,5 @@ exports.up = (pgm) => {
 };
 
 exports.down = (pgm) => {
-  pgm.dropTable("songs");
+  pgm.dropTable("albums");
 };
