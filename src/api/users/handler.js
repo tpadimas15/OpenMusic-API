@@ -18,7 +18,7 @@ class UsersHandler {
 
       const response = h.response({
         status: "success",
-        message: "User berhasil ditambahkan",
+        message: "Succesfuly added User",
         data: {
           userId,
         },
@@ -38,7 +38,7 @@ class UsersHandler {
       // Server ERROR!
       const response = h.response({
         status: "error",
-        message: "Maaf, terjadi kegagalan pada server kami.",
+        message: "Sorry, server failed!",
       });
       response.code(500);
       console.error(error);
@@ -71,7 +71,7 @@ class UsersHandler {
       // server ERROR!
       const response = h.response({
         status: "error",
-        message: "Maaf, terjadi kegagalan pada server kami.",
+        message: "Sorry, server failed!",
       });
       response.code(500);
       console.error(error);
