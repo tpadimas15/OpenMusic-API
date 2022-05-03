@@ -2,7 +2,7 @@ const routes = (handler) => [
   {
     method: "POST",
     path: "/playlists",
-    handler: handler.postPlaylistHandler,
+    handler: handler.postPlaylistsHandler,
     options: {
       auth: "playlist_jwt",
     },

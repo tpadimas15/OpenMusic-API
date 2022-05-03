@@ -6,14 +6,14 @@ class PlaylistsHandler {
     this._validator = validator;
     this._usersService = usersService;
 
-    this.postPlaylistHandler = this.postPlaylistHandler.bind(this);
+    this.postPlaylistsHandler = this.postPlaylistsHandler.bind(this);
     this.getPlaylistsHandler = this.getPlaylistsHandler.bind(this);
     this.getPlaylistByIdHandler = this.getPlaylistByIdHandler.bind(this);
     this.putPlaylistByIdHandler = this.putPlaylistByIdHandler.bind(this);
     this.deletePlaylistByIdHandler = this.deletePlaylistByIdHandler.bind(this);
   }
 
-  async postPlaylistHandler(request, h) {
+  async postPlaylistsHandler(request, h) {
     try {
       this._validator.validatePlaylistPayload(request.payload);
       const { name } = request.payload;
