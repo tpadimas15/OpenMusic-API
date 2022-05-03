@@ -6,7 +6,7 @@ class PlaylistsHandler {
     this._validator = validator;
     this._usersService = usersService;
 
-    this.postPlaylistsHandler = this.postPlaylistsHandler.bind(this);
+    this.postPlaylistHandler = this.postPlaylistsHandler.bind(this);
     this.getPlaylistsHandler = this.getPlaylistsHandler.bind(this);
     this.getPlaylistByIdHandler = this.getPlaylistByIdHandler.bind(this);
     this.putPlaylistByIdHandler = this.putPlaylistByIdHandler.bind(this);
