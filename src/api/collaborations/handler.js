@@ -1,8 +1,8 @@
 const ClientError = require("../../exceptions/ClientError");
 
 class CollaborationsHandler {
-  constructor(collaborationsService, playlistsService, validator) {
-    this._collaborationsService = collaborationsService;
+  constructor(service, playlistsService, validator) {
+    this._service = service;
     this._playlistsService = playlistsService;
     this._validator = validator;
 

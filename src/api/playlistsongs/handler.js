@@ -1,8 +1,8 @@
 const ClientError = require("../../exceptions/ClientError");
 
 class PlaylistsongsHandler {
-  constructor(playlistsongsService, playlistsService, validator) {
-    this._playlistsongsService = playlistsongsService;
+  constructor(service, playlistsService, validator) {
+    this._service = service;
     this._playlistsService = playlistsService;
     this._validator = validator;
 
@@ -19,7 +19,7 @@ class PlaylistsongsHandler {
       const { id: playlistId } = request.params;
 
       await this._playlistsService.verifyPlaylistAccess(playlistId, credentialId);
-      const playlistsongId = await this._playlistsongsService.addPlaylistsong(songId, playlistId);
+      const playlistsongId = await this._service.addPlaylistsong(songId, playlistId);
 
       const response = h.response({
         status: "success",
@@ -57,7 +57,7 @@ class PlaylistsongsHandler {
       const { id: playlistId } = request.params;
 
       await this._playlistsService.verifyPlaylistAccess(playlistId, credentialId);
-      const playlistsongs = await this._playlistsongsService.getPlaylistsongById(playlistId);
+      const playlistsongs = await this._service.getPlaylistsongById(playlistId);
 
       const playlistsongsProps = playlistsongs.map((playlistsong) => ({
         id: playlistsong.id,
@@ -100,7 +100,7 @@ class PlaylistsongsHandler {
       const { id: playlistId } = request.params;
 
       await this._playlistsService.verifyPlaylistAccess(playlistId, credentialId);
-      await this._playlistsongsService.deletePlaylistsong(songId, playlistId);
+      await this._service.deletePlaylistsong(songId, playlistId);
 
       return {
         status: "success",
