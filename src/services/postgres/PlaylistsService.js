@@ -76,6 +76,21 @@ class PlaylistsService {
       throw new AuthorizationError("You can't to access this playlist");
     }
   }
+
+  async verifyPlaylistAccess(playlistId, userId) {
+    try {
+      await this.verifyPlaylistOwner(playlistId, userId);
+    } catch (error) {
+      if (error instanceof NotFoundError) {
+        throw error;
+      }
+      try {
+        await this._collaborationsService.verifyCollaborator(playlistId, userId);
+      } catch {
+        throw error;
+      }
+    }
+  }
 }
 
 module.exports = PlaylistsService;
