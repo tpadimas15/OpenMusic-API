@@ -10,10 +10,19 @@ class PlaylistsongsService {
   }
 
   async addPlaylistsong(songId, playlistId) {
+    const checkSongQuery = {
+      text: "SELECT title FROM songs WHERE id = $1",
+      values: [songId],
+    };
+    const songResult = await this._pool.query(checkSongQuery);
+
+    if (!songResult.rows.length) {
+      throw new NotFoundError("Song Not Found");
+    }
     const id = `playlistsong-${nanoid(16)}`;
 
     const query = {
-      text: "INSERT INTO playlistsongs VALUES($1, $2, $3) RETURNING id",
+      text: "INSERT INTO playlistsongs VALUES($1, $2, $3) RETURNING playlist_id",
       values: [id, playlistId, songId],
     };
 
