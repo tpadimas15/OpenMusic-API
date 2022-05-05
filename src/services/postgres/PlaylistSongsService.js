@@ -42,7 +42,7 @@ class PlaylistsongsService {
       LEFT JOIN songs ON songs.id = playlistsongs.song_id
       LEFT JOIN users ON users.id = playlists.owner
       WHERE playlists.id = $1`,
-      values: [playlistId],
+      values: [id],
     };
 
     const result = await this._pool.query(query);
@@ -60,7 +60,7 @@ class PlaylistsongsService {
     const playlstResult = {
       id: result.rows[0].id,
       name: result.rows[0].name,
-      owner: result.rows[0].username,
+      username: result.rows[0].username,
       songs,
     };
 
