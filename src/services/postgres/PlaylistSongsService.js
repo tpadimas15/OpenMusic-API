@@ -37,17 +37,34 @@ class PlaylistsongsService {
 
   async getPlaylistsongById(id) {
     const query = {
-      text: `SELECT playlistsongs.*, songs.title, songs.performer FROM playlistsongs LEFT JOIN songs ON songs.id = playlistsongs.song_id 
-      WHERE playlistsongs.playlist_id = $1`,
-      values: [id],
+      text: `SELECT playlists.*, users.username, songs.id as song_id, songs.title as song_title, songs.performer FROM playlists
+      LEFT JOIN playlistsongs ON playlistsongs.playlist_id = playlists.id
+      LEFT JOIN songs ON songs.id = playlistsongs.song_id
+      LEFT JOIN users ON users.id = playlists.owner
+      WHERE playlists.id = $1`,
+      values: [playlistId],
     };
+
     const result = await this._pool.query(query);
 
     if (!result.rows.length) {
       throw new NotFoundError("Playlist not found");
     }
 
-    return result.rows.map(mapDBToModel);
+    const songs = result.rows.map((row) => ({
+      id: row.song_id,
+      title: row.song_title,
+      performer: row.performer,
+    }));
+
+    const playlstResult = {
+      id: result.rows[0].id,
+      name: result.rows[0].name,
+      owner: result.rows[0].username,
+      songs,
+    };
+
+    return playlstResult;
   }
 
   async deletePlaylistsong(songId, playlistId) {

@@ -57,18 +57,11 @@ class PlaylistsongsHandler {
       const { id: playlistId } = request.params;
 
       await this._playlistsService.verifyPlaylistAccess(playlistId, credentialId);
-      const playlistsongs = await this._service.getPlaylistsongById(playlistId);
-
-      const playlistsongsProps = playlistsongs.map((playlistsong) => ({
-        id: playlistsong.id,
-        title: playlistsong.title,
-        performer: playlistsong.performer,
-      }));
 
       return {
         status: "success",
         data: {
-          songs: playlistsongsProps,
+          songs,
         },
       };
     } catch (error) {

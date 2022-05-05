@@ -54,49 +54,23 @@ class PlaylistsHandler {
     }
   }
 
-  async getPlaylistsHandler(request, h) {
-    try {
-      const { id: credentialId } = request.auth.credentials;
-      const playlists = await this._playlistsService.getPlaylists(credentialId);
-
-      const playlistsProps = playlists.map((playlist) => ({
-        id: playlist.id,
-        name: playlist.name,
-        username: playlist.username,
-      }));
-      return {
-        status: "success",
-        data: {
-          playlists: playlistsProps,
-        },
-      };
-    } catch (error) {
-      if (error instanceof ClientError) {
-        const response = h.response({
-          status: "fail",
-          message: error.message,
-        });
-        response.code(error.statusCode);
-        return response;
-      }
-
-      // Server ERROR!
-      const response = h.response({
-        status: "error",
-        message: "Sorry, server failed!",
-      });
-      response.code(500);
-      console.error(error);
-      return response;
-    }
+  async getPlaylistsHandler(request) {
+    const { id: credentialId } = request.auth.credentials;
+    const playlists = await this._playlistsService.getPlaylists(credentialId);
+    return {
+      status: "success",
+      data: {
+        playlists,
+      },
+    };
   }
 
   async getPlaylistByIdHandler(request, h) {
     try {
-      const { id } = request.params;
       const { id: credentialId } = request.auth.credentials;
+      const { id } = request.params;
 
-      await this._playlistsService.verifyPlaylistAccess(id, credentialId);
+      await this._playlistsService.verifyPlaylistOwner(id, credentialId);
       const playlist = await this._playlistsService.getPlaylistById(id);
 
       return {
